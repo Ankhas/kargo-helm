@@ -1,5 +1,5 @@
 image:
-  repository: ghcr.io/Ankhas/guestbook
+  repository: ghcr.io/ankhas/guestbook
   pullPolicy: IfNotPresent
   tag: latest
 
