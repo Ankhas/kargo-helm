@@ -1,3 +1,39 @@
+# apiVersion: argoproj.io/v1alpha1
+# kind: ApplicationSet
+# metadata:
+#   name: kargo-helm
+#   namespace: argocd
+# spec:
+#   generators:
+#     - git:
+#         repoURL: https://github.com/ankhas/kargo-helm.git
+#         revision: HEAD
+#         directories:
+#           - path: env/*
+#     # - list:
+#     #     elements:
+#     #       - stage: dev
+#     #       - stage: staging
+#     #       - stage: prod-eu
+#     #       - stage: prod-us
+#   template:
+#     metadata:
+#       name: kargo-helm-{{path.basename}}
+#       annotations:
+#         kargo.akuity.io/authorized-stage: kargo-helm:{{path.basename}}
+#     spec:
+#       destination:
+#         namespace: kargo-helm-{{path.basename}}
+#         name: demo
+#       project: kargo-helm
+#       source:
+#         path: charts/guestbook
+#         repoURL: https://github.com/ankhas/kargo-helm.git
+#         helm:
+#           valueFiles:
+#             - "/env/{{path.basename}}/values.yaml"
+#             - "/env/{{path.basename}}/feature-flags.yaml"
+
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -5,25 +41,31 @@ metadata:
   namespace: argocd
 spec:
   generators:
-  - git:
-      repoURL: https://github.com/ankhas/kargo-helm.git
-      revision: HEAD
-      directories:
-      - path: env/*
+    - list:
+        elements:
+          - stage: dev
+          - stage: staging
+          - stage: prod-eu
+          - stage: prod-us
   template:
     metadata:
-      name: kargo-helm-{{path.basename}}
+      name: kargo-helm-{{stage}}
       annotations:
-        kargo.akuity.io/authorized-stage: kargo-helm:{{path.basename}}
+        kargo.akuity.io/authorized-stage: kargo-helm:{{stage}}
     spec:
-      destination:
-        namespace: kargo-helm-{{path.basename}}
-        name: demo
+      # project: default
       project: kargo-helm
       source:
-        path: charts/guestbook
         repoURL: https://github.com/ankhas/kargo-helm.git
+        # targetRevision: stage/{{stage}}
+        path: charts/guestbook
         helm:
           valueFiles:
-          - "/env/{{path.basename}}/values.yaml"
-          - "/env/{{path.basename}}/feature-flags.yaml"
+            - "/env/{{stage}}/values.yaml"
+            - "/env/{{stage}}/feature-flags.yaml"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: kargo-helm-{{stage}}
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true

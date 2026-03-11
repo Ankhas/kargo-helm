@@ -8,21 +8,21 @@ metadata:
     kargo.akuity.io/argocd-context: '[{"name":"kargo-helm-dev","namespace":"argocd"}]'
 spec:
   requestedFreight:
-  - origin:
-      kind: Warehouse
-      name: guestbook
-    sources:
-      direct: true
-  - origin:
-      kind: Warehouse
-      name: features
-    sources:
-      direct: true
+    - origin:
+        kind: Warehouse
+        name: guestbook
+      sources:
+        direct: true
+    - origin:
+        kind: Warehouse
+        name: features
+      sources:
+        direct: true
   promotionTemplate:
     spec:
       steps:
-      - task:
-          name: promote
+        - task:
+            name: promote
 
 ---
 apiVersion: kargo.akuity.io/v1alpha1
@@ -35,28 +35,23 @@ metadata:
     kargo.akuity.io/argocd-context: '[{"name":"kargo-helm-staging","namespace":"argocd"}]'
 spec:
   requestedFreight:
-  - origin:
-      kind: Warehouse
-      name: guestbook
-    sources:
-      stages:
-        - dev
-  - origin:
-      kind: Warehouse
-      name: features
-    sources:
-      stages:
-        - dev
+    - origin:
+        kind: Warehouse
+        name: guestbook
+      sources:
+        stages:
+          - dev
+    - origin:
+        kind: Warehouse
+        name: features
+      sources:
+        stages:
+          - dev
   promotionTemplate:
     spec:
       steps:
-      - task:
-          name: promote
-  promotionTemplate:
-    spec:
-      steps:
-      - task:
-          name: promote
+        - task:
+            name: promote
 
 ---
 apiVersion: kargo.akuity.io/v1alpha1
@@ -69,23 +64,23 @@ metadata:
     kargo.akuity.io/argocd-context: '[{"name":"kargo-helm-prod-us","namespace":"argocd"}]'
 spec:
   requestedFreight:
-  - origin:
-      kind: Warehouse
-      name: guestbook
-    sources:
-      stages:
-        - staging
-  - origin:
-      kind: Warehouse
-      name: features
-    sources:
-      stages:
-        - staging
+    - origin:
+        kind: Warehouse
+        name: guestbook
+      sources:
+        stages:
+          - staging
+    - origin:
+        kind: Warehouse
+        name: features
+      sources:
+        stages:
+          - staging
   promotionTemplate:
     spec:
       steps:
-      - task:
-          name: promote
+        - task:
+            name: promote
 
 ---
 apiVersion: kargo.akuity.io/v1alpha1
@@ -98,20 +93,20 @@ metadata:
     kargo.akuity.io/argocd-context: '[{"name":"kargo-helm-prod-eu","namespace":"argocd"}]'
 spec:
   requestedFreight:
-  - origin:
-      kind: Warehouse
-      name: guestbook
-    sources:
-      stages:
-        - staging
-  - origin:
-      kind: Warehouse
-      name: features
-    sources:
-      stages:
-        - staging
+    - origin:
+        kind: Warehouse
+        name: guestbook
+      sources:
+        stages:
+          - staging
+    - origin:
+        kind: Warehouse
+        name: features
+      sources:
+        stages:
+          - staging
   promotionTemplate:
     spec:
       steps:
-      - task:
-          name: promote
+        - task:
+            name: promote
