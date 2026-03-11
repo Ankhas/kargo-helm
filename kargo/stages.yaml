@@ -22,7 +22,8 @@ spec:
     spec:
       steps:
         - task:
-            name: promote
+            name: demo-promo-process
+          as: promo-process
 
 ---
 apiVersion: kargo.akuity.io/v1alpha1
@@ -51,7 +52,8 @@ spec:
     spec:
       steps:
         - task:
-            name: promote
+            name: demo-promo-process
+          as: promo-process
 
 ---
 apiVersion: kargo.akuity.io/v1alpha1
@@ -80,7 +82,8 @@ spec:
     spec:
       steps:
         - task:
-            name: promote
+            name: demo-promo-process
+          as: promo-process
 
 ---
 apiVersion: kargo.akuity.io/v1alpha1
@@ -109,4 +112,5 @@ spec:
     spec:
       steps:
         - task:
-            name: promote
+            name: demo-promo-process
+          as: promo-process
